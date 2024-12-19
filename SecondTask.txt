@@ -1,0 +1,51 @@
+---------------------Использованная база данных-------------------------------
+
+CREATE TABLE Products (
+    id INT IDENTITY(1,1) PRIMARY KEY, -- Автоинкрементное поле
+    name NVARCHAR(255) NOT NULL       -- Поле для имени продукта
+);
+
+CREATE TABLE Categories (
+    id INT IDENTITY(1,1) PRIMARY KEY, -- Автоинкрементное поле
+    name NVARCHAR(255) NOT NULL       -- Поле для имени продукта
+);
+
+CREATE TABLE ProductsCategories (
+    product_id INT,
+    categoty_id INT,
+    PRIMARY KEY (product_id, categoty_id),
+    FOREIGN KEY (product_id) REFERENCES Products(id),
+  	FOREIGN KEY (categoty_id) REFERENCES Categories(id),
+);
+
+INSERT INTO Products (name) VALUES
+('Молоко'), 
+('Сыр'), 
+('Мясо'), 
+('Птица'),
+('Бананы'),
+('Мёд');
+
+INSERT INTO Categories (name) VALUES
+('Белки'),
+('Жиры'),
+('Углеводы');
+
+INSERT INTO ProductsCategories (product_id, categoty_id) VALUES
+('1', '2'),
+('1', '1'),
+('2', '1'),
+('3', '3'),
+('2', '2'),
+('4', '1'),
+('4', '3');
+---------------------------------------------------------------------------
+
+-----------------------Использованный запрос-------------------------------
+
+SELECT Products.name AS Имя_продукта, Categories.name AS Имя_категории
+FROM Products
+LEFT JOIN ProductsCategories ON Products.id = ProductsCategories.product_id
+LEFT JOIN Categories ON Categories.id = ProductsCategories.categoty_id
+
+---------------------------------------------------------------------------
